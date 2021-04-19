@@ -6,6 +6,7 @@ var gCtx;
 function init() {
   gCanvas = document.getElementById('meme-canvas');
   gCtx = gCanvas.getContext('2d');
+  renderImgs(gImgs);
   getImgs();
   drawImg();
 }
@@ -36,6 +37,20 @@ function drawText(lines, x, y) {
 }
 
 /********* DOM functions *********/
+
+function renderImgs(imgs) {
+  var strHTML = imgs.map(function (img) {
+    return `<img
+    src="img/${img.id}.jpg"
+    data-id="${img.id}"
+    class="gallery-img"
+    onclick="getImgId(this)"
+  />`;
+  });
+  var elGallery = document.querySelector('.gallery-container');
+  elGallery.innerHTML = strHTML;
+}
+
 function getText(ev) {
   ev.stopPropagation();
   var elTxt = document.querySelector('input[name="edit-text"]');

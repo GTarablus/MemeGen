@@ -32,3 +32,11 @@ body {
   width: 200px;
   height: 200px;
 }
+
+.gallery-img:hover {
+  cursor: pointer;
+  /* width: 300px;
+  height: 300px;
+  transition: 0.6s;
+  z-index: 10; */
+}
