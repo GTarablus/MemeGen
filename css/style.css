@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.main-header {
+  background-color: darkgoldenrod;
+  width: 100%;
+  height: 100px;
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-container {
+  padding-top: 20px;
+}
+.nav-pages {
+  display: flex;
+}
+
+#meme-canvas {
+  border: 1px solid black;
+}
+
+.gallery-img {
+  width: 200px;
+  height: 200px;
+}
