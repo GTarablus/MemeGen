@@ -2,10 +2,17 @@
 var gImgCount = 18;
 var gKeywords = {};
 var gImgs = getImgs();
+var gTextFocus = 0;
 var gMeme = {
-  selectedImgId: 1,
+  selectedImgId: 0,
   selectedLineIdx: 0,
   lines: [
+    {
+      txt: '',
+      size: 40,
+      align: 'center',
+      color: 'red',
+    },
     {
       txt: '',
       size: 40,
@@ -33,11 +40,22 @@ function getImg(id) {
 }
 
 function setText(txt) {
-  gMeme.lines[0].txt = txt;
+  gMeme.lines[gTextFocus].txt = txt;
   drawImg();
 }
 
 function setMeme(id) {
   gMeme.selectedImgId = +id;
   drawImg();
+}
+
+function setFontSize(value) {
+  gMeme.lines[gTextFocus].size += value;
+  return gMeme.lines[0].size;
+}
+
+function setFocus() {
+  if (gTextFocus === 1) gTextFocus = 0;
+  else gTextFocus = 1;
+  return gTextFocus;
 }

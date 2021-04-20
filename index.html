@@ -23,26 +23,35 @@
     <main class="main-container">
       <section class="meme-editor">
         <div class="canvas-container">
-          <canvas id="meme-canvas" height="500" width="500"></canvas>
+          <canvas
+            id="meme-canvas"
+            height="500"
+            width="500"
+            onclick="draw(event)"
+          ></canvas>
         </div>
-        <label for="edit-text">Edit Text:</label><br />
-        <input type="text" id="edit-text" name="edit-text" /><br />
-        <button class="submit-text" onclick="getText(event)">Submit</button>
+        <div class="editor">
+          <div class="text-box">
+            <label for="edit-text" class="text-label">Edit Text Line 1</label
+            ><br />
+            <input type="text" id="edit-text" name="edit-text" /><br />
+            <button class="submit-text" onclick="getText(event)">Submit</button>
+          </div>
+          <button class="focus-switch" onclick="switchFocus()">
+            Switch Line
+          </button>
+          <div class="font-size-container">
+            <button class="font-size-btn" onclick="onUpdateFontSize(-1)">
+              -
+            </button>
+            <span class="font-size">40</span>
+            <button class="font-size-btn" onclick="onUpdateFontSize(1)">
+              +
+            </button>
+          </div>
+        </div>
       </section>
-      <div class="gallery-container">
-        <!-- <img
-          src="img/0.jpg"
-          data-id="0"
-          class="gallery-img"
-          onclick="getImgId(this)"
-        />
-        <img
-          src="img/2.jpg"
-          data-id="2"
-          class="gallery-img"
-          onclick="getImgId(this)"
-        /> -->
-      </div>
+      <div class="gallery-container"></div>
     </main>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
