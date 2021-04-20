@@ -37,9 +37,14 @@
             <input type="text" id="edit-text" name="edit-text" /><br />
             <button class="submit-text" onclick="getText(event)">Submit</button>
           </div>
-          <button class="focus-switch" onclick="switchFocus()">
+          <button class="focus-switch" onclick="onSwitchFocus()">
             Switch Line
           </button>
+          <button class="move-text" onclick="onChangeTextPos(-5)">↑</button>
+          <button class="default-position" onclick="onDefaultPos()">
+            Restore Default
+          </button>
+          <button class="move-text" onclick="onChangeTextPos(5)">↓</button>
           <div class="font-size-container">
             <button class="font-size-btn" onclick="onUpdateFontSize(-1)">
               -
@@ -48,6 +53,20 @@
             <button class="font-size-btn" onclick="onUpdateFontSize(1)">
               +
             </button>
+            <label for="text-color"> Choose text color</label>
+            <input
+              type="color"
+              name="text-color"
+              id="text-color"
+              oninput="onTextColorChange(this)"
+            />
+            <label for="text-outline"> Choose text outline</label>
+            <input
+              type="color"
+              name="text-outline"
+              id="text-outline"
+              oninput="onTextOutlineChange(this)"
+            />
           </div>
         </div>
       </section>

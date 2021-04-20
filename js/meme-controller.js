@@ -22,14 +22,22 @@ function drawImg() {
   img.src = getImg(gMeme.selectedImgId).url;
   img.onload = () => {
     gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
-    drawText(gMeme.lines[0], 250, 70);
-    drawText(gMeme.lines[1], 250, 430);
+    drawText(
+      gMeme.lines[0],
+      gMeme.lines[0].positionX,
+      gMeme.lines[0].positionY
+    );
+    drawText(
+      gMeme.lines[1],
+      gMeme.lines[1].positionX,
+      gMeme.lines[1].positionY
+    );
   };
 }
 
 function drawText(lines, x, y) {
   gCtx.lineWidth = 2;
-  gCtx.strokeStyle = 'black';
+  gCtx.strokeStyle = lines.stroke;
   gCtx.fillStyle = lines.color;
   gCtx.font = `${lines.size}px Impact`;
   gCtx.textAlign = lines.align;
@@ -79,10 +87,31 @@ function onUpdateFontSize(value) {
   drawImg();
 }
 
-function switchFocus() {
+function onSwitchFocus() {
   var lineNum = setFocus();
   var elTextBoxLabel = document.querySelector('.text-label');
   elTextBoxLabel.innerHTML = `Edit Text Line ${lineNum + 1}`;
   var elFontSize = document.querySelector('.font-size');
   elFontSize.innerHTML = gMeme.lines[gTextFocus].size;
+}
+
+function onChangeTextPos(value) {
+  setTextPos(value);
+  drawImg();
+}
+
+function onDefaultPos() {
+  setDefaultLinePos();
+  drawImg();
+}
+
+function onTextColorChange(el) {
+  var color = el.value;
+  setTextColor(color);
+  drawImg();
+}
+function onTextOutlineChange(el) {
+  var color = el.value;
+  setOutlineColor(color);
+  drawImg();
 }

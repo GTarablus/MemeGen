@@ -11,13 +11,19 @@ var gMeme = {
       txt: '',
       size: 40,
       align: 'center',
-      color: 'red',
+      color: 'white',
+      stroke: 'black',
+      positionX: 250,
+      positionY: 70,
     },
     {
       txt: '',
       size: 40,
       align: 'center',
-      color: 'red',
+      color: 'white',
+      stroke: 'black',
+      positionX: 250,
+      positionY: 430,
     },
   ],
 };
@@ -58,4 +64,21 @@ function setFocus() {
   if (gTextFocus === 1) gTextFocus = 0;
   else gTextFocus = 1;
   return gTextFocus;
+}
+
+function setTextPos(value) {
+  gMeme.lines[gTextFocus].positionY += value;
+}
+
+function setDefaultLinePos() {
+  gMeme.lines[0].positionY = 70;
+  gMeme.lines[1].positionY = 430;
+}
+
+function setTextColor(color) {
+  gMeme.lines[gTextFocus].color = color;
+}
+
+function setOutlineColor(outline) {
+  gMeme.lines[gTextFocus].stroke = outline;
 }
