@@ -72,19 +72,24 @@ function getText(ev) {
   ev.stopPropagation();
   var elTxt = document.querySelector('input[name="edit-text"]');
   setText(elTxt.value);
+}
+function cleanText() {
+  var elTxt = document.querySelector('input[name="edit-text"]');
   elTxt.value = '';
 }
 
 function getImgId(elImg) {
   var imageId = elImg.dataset.id;
   setMeme(imageId);
+  var modal = document.querySelector('#modal');
+  modal.style.display = 'flex';
 }
 
 function onUpdateFontSize(value) {
-  setFontSize(value);
   var elFontSize = document.querySelector('.font-size');
-  elFontSize.innerHTML = gMeme.lines[gTextFocus].size;
-  drawImg();
+  var newFontSize = +elFontSize.value + value;
+  elFontSize.value = newFontSize;
+  onFontChange();
 }
 
 function onSwitchFocus() {
@@ -92,7 +97,7 @@ function onSwitchFocus() {
   var elTextBoxLabel = document.querySelector('.text-label');
   elTextBoxLabel.innerHTML = `Edit Text Line ${lineNum + 1}`;
   var elFontSize = document.querySelector('.font-size');
-  elFontSize.innerHTML = gMeme.lines[gTextFocus].size;
+  elFontSize.value = gMeme.lines[gTextFocus].size;
 }
 
 function onChangeTextPos(value) {
@@ -114,4 +119,21 @@ function onTextOutlineChange(el) {
   var color = el.value;
   setOutlineColor(color);
   drawImg();
+}
+
+function onFontChange() {
+  var elFontSize = document.querySelector('.font-size').value;
+  setFontSize(elFontSize);
+  drawImg();
+}
+
+function closeModal() {
+  var modal = document.querySelector('#modal');
+  modal.style.display = 'none';
+}
+
+function downloadCanvas(elLink) {
+  const data = gCanvas.toDataURL();
+  elLink.href = data;
+  elLink.download = 'GeneratedMeme';
 }

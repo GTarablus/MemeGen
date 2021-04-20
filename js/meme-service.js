@@ -8,7 +8,7 @@ var gMeme = {
   selectedLineIdx: 0,
   lines: [
     {
-      txt: '',
+      txt: 'line 1',
       size: 40,
       align: 'center',
       color: 'white',
@@ -17,7 +17,7 @@ var gMeme = {
       positionY: 70,
     },
     {
-      txt: '',
+      txt: 'line 2',
       size: 40,
       align: 'center',
       color: 'white',
@@ -56,8 +56,8 @@ function setMeme(id) {
 }
 
 function setFontSize(value) {
-  gMeme.lines[gTextFocus].size += value;
-  return gMeme.lines[0].size;
+  if (value > 128) return;
+  gMeme.lines[gTextFocus].size = value;
 }
 
 function setFocus() {
@@ -71,8 +71,8 @@ function setTextPos(value) {
 }
 
 function setDefaultLinePos() {
-  gMeme.lines[0].positionY = 70;
-  gMeme.lines[1].positionY = 430;
+  if (!gTextFocus) gMeme.lines[0].positionY = 70;
+  else gMeme.lines[1].positionY = 430;
 }
 
 function setTextColor(color) {

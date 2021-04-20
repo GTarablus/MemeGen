@@ -8,56 +8,73 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body onload="init()">
-    <header class="main-header">
-      <div class="logo">MemeGen</div>
-      <nav class="main-nav">
-        <div class="nav-pages">
-          <ui>
-            <li>Gallery</li>
-            <li>Memes</li>
-            <li>About</li>
-          </ui>
-        </div>
-      </nav>
-    </header>
-    <main class="main-container">
-      <section class="meme-editor">
-        <div class="canvas-container">
-          <canvas
-            id="meme-canvas"
-            height="500"
-            width="500"
-            onclick="draw(event)"
-          ></canvas>
-        </div>
-        <div class="editor">
-          <div class="text-box">
-            <label for="edit-text" class="text-label">Edit Text Line 1</label
-            ><br />
-            <input type="text" id="edit-text" name="edit-text" /><br />
-            <button class="submit-text" onclick="getText(event)">Submit</button>
+    <div class="body-container">
+      <header class="main-header">
+        <div class="logo">MemeGen</div>
+        <nav class="main-nav">
+          <div class="nav-pages">
+            <ui>
+              <li>Gallery</li>
+              <li>Memes</li>
+              <li>About</li>
+            </ui>
           </div>
-          <button class="focus-switch" onclick="onSwitchFocus()">
-            Switch Line
-          </button>
-          <button class="move-text" onclick="onChangeTextPos(-5)">↑</button>
-          <button class="default-position" onclick="onDefaultPos()">
-            Restore Default
-          </button>
-          <button class="move-text" onclick="onChangeTextPos(5)">↓</button>
-          <div class="font-size-container">
-            <button class="font-size-btn" onclick="onUpdateFontSize(-1)">
-              -
-            </button>
-            <span class="font-size">40</span>
-            <button class="font-size-btn" onclick="onUpdateFontSize(1)">
-              +
-            </button>
+        </nav>
+      </header>
+      <main class="main-container">
+        <section id="modal" class="meme-editor">
+          <div class="canvas-container">
+            <canvas
+              id="meme-canvas"
+              height="500"
+              width="500"
+              onclick="draw(event)"
+            ></canvas>
+          </div>
+          <div class="editor">
+            <div class="text-box">
+              <label for="edit-text" class="text-label">Edit Text Line 1</label
+              ><br />
+              <input
+                type="text"
+                id="edit-text"
+                name="edit-text"
+                oninput="getText(event)"
+              /><br />
+              <button class="submit-text" onclick="cleanText()">Submit</button>
+              <button class="focus-switch" onclick="onSwitchFocus()">
+                Switch Line
+              </button>
+            </div>
+            <div class="position-control">
+              <button class="move-text" onclick="onChangeTextPos(-5)">↑</button>
+              <button class="default-position" onclick="onDefaultPos()">
+                Restore Default
+              </button>
+              <button class="move-text" onclick="onChangeTextPos(5)">↓</button>
+            </div>
+            <div class="font-size-container">
+              <button class="font-size-btn" onclick="onUpdateFontSize(-1)">
+                -
+              </button>
+              <input
+                type="number"
+                class="font-size"
+                min="1"
+                max="128"
+                value="40"
+                oninput="onFontChange()"
+              />
+              <button class="font-size-btn" onclick="onUpdateFontSize(1)">
+                +
+              </button>
+            </div>
             <label for="text-color"> Choose text color</label>
             <input
               type="color"
               name="text-color"
               id="text-color"
+              value="#ffffff"
               oninput="onTextColorChange(this)"
             />
             <label for="text-outline"> Choose text outline</label>
@@ -67,11 +84,14 @@
               id="text-outline"
               oninput="onTextOutlineChange(this)"
             />
+            <a href="#" onclick="downloadCanvas(this)" download>Download</a>
           </div>
-        </div>
-      </section>
-      <div class="gallery-container"></div>
-    </main>
+          <button class="close-modal" onclick="closeModal()">❌</button>
+        </section>
+        <div class="gallery-container"></div>
+      </main>
+      <footer class="main-footer"></footer>
+    </div>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
   </body>
