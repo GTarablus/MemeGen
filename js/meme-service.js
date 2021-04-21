@@ -3,6 +3,7 @@ var gImgCount = 18;
 var gKeywords = {};
 var gImgs = getImgs();
 var gTextFocus = 0;
+var gNumOfLines = 1;
 var gMeme = {
   selectedImgId: 0,
   selectedLineIdx: 0,
@@ -13,6 +14,7 @@ var gMeme = {
       align: 'center',
       color: 'white',
       stroke: 'black',
+      font: 'impact',
       positionX: 250,
       positionY: 70,
     },
@@ -22,6 +24,7 @@ var gMeme = {
       align: 'center',
       color: 'white',
       stroke: 'black',
+      font: 'impact',
       positionX: 250,
       positionY: 430,
     },
@@ -47,12 +50,10 @@ function getImg(id) {
 
 function setText(txt) {
   gMeme.lines[gTextFocus].txt = txt;
-  drawImg();
 }
 
 function setMeme(id) {
   gMeme.selectedImgId = +id;
-  drawImg();
 }
 
 function setFontSize(value) {
@@ -61,8 +62,8 @@ function setFontSize(value) {
 }
 
 function setFocus() {
-  if (gTextFocus === 1) gTextFocus = 0;
-  else gTextFocus = 1;
+  if (gTextFocus >= gNumOfLines) gTextFocus = 0;
+  else gTextFocus++;
   return gTextFocus;
 }
 
@@ -81,4 +82,32 @@ function setTextColor(color) {
 
 function setOutlineColor(outline) {
   gMeme.lines[gTextFocus].stroke = outline;
+}
+
+function deleteLine() {
+  gMeme.lines.splice(gTextFocus, 1);
+  gNumOfLines--;
+  setFocus();
+}
+
+function addNewLine() {
+  var newLine = {
+    txt: 'new line',
+    size: 40,
+    align: 'center',
+    color: 'white',
+    stroke: 'black',
+    positionX: 250,
+    positionY: 250,
+  };
+  gMeme.lines.push(newLine);
+  gNumOfLines++;
+}
+
+function setFontFamily(font) {
+  gMeme.lines[gTextFocus].font = font;
+}
+
+function setTextAlign(align) {
+  gMeme.lines[gTextFocus].align = align;
 }

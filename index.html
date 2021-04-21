@@ -33,15 +33,22 @@
           </div>
           <div class="editor">
             <div class="text-box">
-              <label for="edit-text" class="text-label">Edit Text Line 1</label
-              ><br />
-              <input
-                type="text"
-                id="edit-text"
-                name="edit-text"
-                oninput="getText(event)"
-              /><br />
-              <button class="submit-text" onclick="cleanText()">Submit</button>
+              <form class="text-input" onsubmit="onTextSubmit(event)">
+                <label for="edit-text" class="text-label"
+                  >Edit Text Line 1</label
+                ><br />
+                <input
+                  type="text"
+                  id="edit-text"
+                  name="edit-text"
+                  oninput="getText(event)"
+                /><br />
+                <button class="submit-text" onclick="cleanText()">
+                  Submit
+                </button>
+              </form>
+              <button class="delete-line" onclick="onDelete()">Delete</button>
+              <button class="add-line" onclick="onAddLine()">Add</button>
               <button class="focus-switch" onclick="onSwitchFocus()">
                 Switch Line
               </button>
@@ -53,12 +60,14 @@
               </button>
               <button class="move-text" onclick="onChangeTextPos(5)">↓</button>
             </div>
+            <label for="font-size">Font Size:</label>
             <div class="font-size-container">
               <button class="font-size-btn" onclick="onUpdateFontSize(-1)">
                 -
               </button>
               <input
                 type="number"
+                name="font-size"
                 class="font-size"
                 min="1"
                 max="128"
@@ -67,6 +76,30 @@
               />
               <button class="font-size-btn" onclick="onUpdateFontSize(1)">
                 +
+              </button>
+            </div>
+            <label for="font-family">Choose a Font:</label>
+            <select
+              id="font-family"
+              name="font-family"
+              onchange="onFontFamilyChange(this)"
+            >
+              <option value="impact">Impact</option>
+              <option value="arial">Arial</option>
+              <option value="cursive">Comic-Sans</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Courier New">Courier New</option>
+              <option value="sans-serif">Sans-Serif</option>
+            </select>
+            <div class="text-alignement">
+              <button value="right" onclick="onChangeAlign(this.value)">
+                Left
+              </button>
+              <button value="center" onclick="onChangeAlign(this.value)">
+                Center
+              </button>
+              <button value="left" onclick="onChangeAlign(this.value)">
+                right
               </button>
             </div>
             <label for="text-color"> Choose text color</label>

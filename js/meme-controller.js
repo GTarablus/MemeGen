@@ -22,16 +22,9 @@ function drawImg() {
   img.src = getImg(gMeme.selectedImgId).url;
   img.onload = () => {
     gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
-    drawText(
-      gMeme.lines[0],
-      gMeme.lines[0].positionX,
-      gMeme.lines[0].positionY
-    );
-    drawText(
-      gMeme.lines[1],
-      gMeme.lines[1].positionX,
-      gMeme.lines[1].positionY
-    );
+    gMeme.lines.forEach(function (line) {
+      drawText(line, line.positionX, line.positionY);
+    });
   };
 }
 
@@ -39,7 +32,7 @@ function drawText(lines, x, y) {
   gCtx.lineWidth = 2;
   gCtx.strokeStyle = lines.stroke;
   gCtx.fillStyle = lines.color;
-  gCtx.font = `${lines.size}px Impact`;
+  gCtx.font = `${lines.size}px ${lines.font}`;
   gCtx.textAlign = lines.align;
   gCtx.fillText(lines.txt, x, y);
   gCtx.strokeText(lines.txt, x, y);
@@ -68,21 +61,27 @@ function renderImgs(imgs) {
   elGallery.innerHTML = strHTML;
 }
 
-function getText(ev) {
-  ev.stopPropagation();
-  var elTxt = document.querySelector('input[name="edit-text"]');
-  setText(elTxt.value);
-}
-function cleanText() {
-  var elTxt = document.querySelector('input[name="edit-text"]');
-  elTxt.value = '';
-}
-
 function getImgId(elImg) {
   var imageId = elImg.dataset.id;
   setMeme(imageId);
   var modal = document.querySelector('#modal');
   modal.style.display = 'flex';
+  var elGallery = document.querySelector('.gallery-container');
+  elGallery.style.display = 'none';
+  drawImg();
+}
+
+/********* Editor actions *********/
+
+function getText(ev) {
+  ev.stopPropagation();
+  var elTxt = document.querySelector('input[name="edit-text"]');
+  setText(elTxt.value);
+  drawImg();
+}
+function cleanText() {
+  var elTxt = document.querySelector('input[name="edit-text"]');
+  elTxt.value = '';
 }
 
 function onUpdateFontSize(value) {
@@ -98,6 +97,7 @@ function onSwitchFocus() {
   elTextBoxLabel.innerHTML = `Edit Text Line ${lineNum + 1}`;
   var elFontSize = document.querySelector('.font-size');
   elFontSize.value = gMeme.lines[gTextFocus].size;
+  cleanText();
 }
 
 function onChangeTextPos(value) {
@@ -128,12 +128,42 @@ function onFontChange() {
 }
 
 function closeModal() {
-  var modal = document.querySelector('#modal');
-  modal.style.display = 'none';
+  var elModal = document.querySelector('#modal');
+  elModal.style.display = 'none';
+  var elGallery = document.querySelector('.gallery-container');
+  elGallery.style.display = 'grid';
 }
 
 function downloadCanvas(elLink) {
   const data = gCanvas.toDataURL();
   elLink.href = data;
   elLink.download = 'GeneratedMeme';
+}
+
+function onDelete() {
+  deleteLine();
+  cleanText();
+  drawImg();
+}
+
+function onAddLine() {
+  addNewLine();
+  cleanText();
+  drawImg();
+}
+
+function onTextSubmit(ev) {
+  ev.preventDefault();
+  cleanText();
+}
+
+function onFontFamilyChange(el) {
+  var font = el.value;
+  setFontFamily(font);
+  drawImg();
+}
+
+function onChangeAlign(align) {
+  setTextAlign(align);
+  drawImg();
 }
