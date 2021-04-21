@@ -53,6 +53,7 @@ body {
   padding-left: 30px;
   padding-right: 30px;
   display: flex; /* CHANGE TO NONE BEFORE HAND-IN */
+  flex-wrap: wrap;
   /* position: fixed; */
   /* z-index: 1; Sit on top */
   left: 0;
