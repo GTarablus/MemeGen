@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meme Generator</title>
+    <link rel="icon" href="/assets/favicon/3-2-troll-face-meme-png_64x64.ico" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body onload="init()">
@@ -28,30 +29,31 @@
               id="meme-canvas"
               height="500"
               width="500"
-              onclick="draw(event)"
+              onclick="canvasClicked(event)"
             ></canvas>
           </div>
           <div class="editor">
             <div class="text-box">
               <form class="text-input" onsubmit="onTextSubmit(event)">
-                <label for="edit-text" class="text-label"
-                  >Edit Text Line 1</label
+                <label for="edit-text" class="text-label">Edit Text</label
                 ><br />
-                <input
-                  type="text"
-                  id="edit-text"
-                  name="edit-text"
-                  oninput="getText(event)"
-                /><br />
+                <div class="input-button">
+                  <input
+                    type="text"
+                    id="edit-text"
+                    name="edit-text"
+                    oninput="getText(event)"
+                  /><br />
+                  <button class="focus-switch" onclick="onSwitchFocus()">
+                    <span class="svg"></span>
+                  </button>
+                </div>
                 <button class="submit-text" onclick="cleanText()">
                   Submit
                 </button>
               </form>
               <button class="delete-line" onclick="onDelete()">Delete</button>
               <button class="add-line" onclick="onAddLine()">Add</button>
-              <button class="focus-switch" onclick="onSwitchFocus()">
-                Switch Line
-              </button>
             </div>
             <div class="position-control">
               <button class="move-text" onclick="onChangeTextPos(-5)">↑</button>
@@ -117,9 +119,13 @@
               id="text-outline"
               oninput="onTextOutlineChange(this)"
             />
-            <a href="#" onclick="downloadCanvas(this)" download>Download</a>
           </div>
-          <button class="close-modal" onclick="closeModal()">❌</button>
+          <div class="actions">
+            <button class="close-modal" onclick="closeModal()">❌</button>
+            <a href="#" onclick="downloadCanvas(this)" class="download-link"
+              >Download</a
+            >
+          </div>
         </section>
         <div class="gallery-container"></div>
       </main>

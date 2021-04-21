@@ -4,6 +4,7 @@ var gKeywords = {};
 var gImgs = getImgs();
 var gTextFocus = 0;
 var gNumOfLines = 1;
+var gTextPositions = [];
 var gMeme = {
   selectedImgId: 0,
   selectedLineIdx: 0,
@@ -17,6 +18,7 @@ var gMeme = {
       font: 'impact',
       positionX: 250,
       positionY: 70,
+      textFocus: true,
     },
     {
       txt: 'line 2',
@@ -27,9 +29,27 @@ var gMeme = {
       font: 'impact',
       positionX: 250,
       positionY: 430,
+      textFocus: false,
     },
   ],
 };
+
+function addNewLine() {
+  var newLine = {
+    txt: 'new line',
+    size: 40,
+    align: 'center',
+    color: 'white',
+    stroke: 'black',
+    positionX: 250,
+    positionY: 250,
+    font: 'impact',
+    textFocus: true,
+  };
+  gMeme.lines.push(newLine);
+  gNumOfLines++;
+}
+
 function getImgs() {
   var imageArray = [];
   for (var i = 0; i < gImgCount; i++) {
@@ -58,7 +78,7 @@ function setMeme(id) {
 
 function setFontSize(value) {
   if (value > 128) return;
-  gMeme.lines[gTextFocus].size = value;
+  gMeme.lines[gTextFocus].size = +value;
 }
 
 function setFocus() {
@@ -90,24 +110,25 @@ function deleteLine() {
   setFocus();
 }
 
-function addNewLine() {
-  var newLine = {
-    txt: 'new line',
-    size: 40,
-    align: 'center',
-    color: 'white',
-    stroke: 'black',
-    positionX: 250,
-    positionY: 250,
-  };
-  gMeme.lines.push(newLine);
-  gNumOfLines++;
-}
-
 function setFontFamily(font) {
   gMeme.lines[gTextFocus].font = font;
 }
 
 function setTextAlign(align) {
   gMeme.lines[gTextFocus].align = align;
+}
+
+function findText(x, y) {
+  var clickedText = gTextPositions.findIndex(function (pos) {
+    return (
+      x > pos.x - pos.width / 2 &&
+      x < pos.x + pos.width / 2 &&
+      y > pos.y - 30 &&
+      y < pos.y + 15
+    );
+  });
+  gMeme.lines[gTextFocus].textFocus = false;
+  gMeme.lines[clickedText].textFocus = true;
+  gTextFocus = clickedText;
+  drawImg();
 }

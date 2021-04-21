@@ -9,6 +9,7 @@ function init() {
   renderImgs(gImgs);
   getImgs();
   drawImg();
+  // resizeCanvas();
 }
 /********* Canvas functions *********/
 
@@ -20,10 +21,14 @@ function clearCanvas() {
 function drawImg() {
   var img = new Image();
   img.src = getImg(gMeme.selectedImgId).url;
+  clearPositions();
   img.onload = () => {
     gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
     gMeme.lines.forEach(function (line) {
       drawText(line, line.positionX, line.positionY);
+      if (line.textFocus) {
+        highlighText(gTextFocus);
+      }
     });
   };
 }
@@ -34,14 +39,39 @@ function drawText(lines, x, y) {
   gCtx.fillStyle = lines.color;
   gCtx.font = `${lines.size}px ${lines.font}`;
   gCtx.textAlign = lines.align;
+  var textPos = {
+    width: gCtx.measureText(lines.txt).width,
+    x: lines.positionX,
+    y: lines.positionY,
+  };
+  gTextPositions.push(textPos);
   gCtx.fillText(lines.txt, x, y);
   gCtx.strokeText(lines.txt, x, y);
 }
 
-function draw(ev) {
+function canvasClicked(ev) {
   const offsetX = ev.offsetX;
   const offsetY = ev.offsetY;
-  console.log(`X = ${offsetX} Y= ${offsetY}`);
+  console.log('X: ' + offsetX);
+  console.log('Y: ' + offsetY);
+  findText(offsetX, offsetY);
+}
+
+function drawTextBox(x, y, textWidth, height) {
+  gCtx.beginPath();
+  gCtx.rect(x, y, height, textWidth);
+  gCtx.fillStyle = 'rgba(255, 255, 255, 0)';
+  gCtx.fillRect(x, y, height, textWidth);
+  gCtx.strokeStyle = 'red';
+  gCtx.stroke();
+}
+function highlighText(textNum) {
+  if (textNum === -1) return;
+  var width = gTextPositions[textNum].width + 5;
+  var x = gMeme.lines[textNum].positionX - width / 2;
+  var y = gMeme.lines[textNum].positionY - 40;
+  var height = gMeme.lines[textNum].size + 5;
+  drawTextBox(x, y, height, width);
 }
 
 /********* DOM functions *********/
@@ -92,12 +122,13 @@ function onUpdateFontSize(value) {
 }
 
 function onSwitchFocus() {
+  gMeme.lines[gTextFocus].textFocus = false;
   var lineNum = setFocus();
-  var elTextBoxLabel = document.querySelector('.text-label');
-  elTextBoxLabel.innerHTML = `Edit Text Line ${lineNum + 1}`;
+  gMeme.lines[lineNum].textFocus = true;
   var elFontSize = document.querySelector('.font-size');
   elFontSize.value = gMeme.lines[gTextFocus].size;
   cleanText();
+  drawImg();
 }
 
 function onChangeTextPos(value) {
@@ -135,6 +166,8 @@ function closeModal() {
 }
 
 function downloadCanvas(elLink) {
+  gMeme.lines[gTextFocus].textFocus = false;
+  drawImg();
   const data = gCanvas.toDataURL();
   elLink.href = data;
   elLink.download = 'GeneratedMeme';
@@ -150,6 +183,7 @@ function onAddLine() {
   addNewLine();
   cleanText();
   drawImg();
+  findText(250, 250);
 }
 
 function onTextSubmit(ev) {
@@ -166,4 +200,8 @@ function onFontFamilyChange(el) {
 function onChangeAlign(align) {
   setTextAlign(align);
   drawImg();
+}
+
+function clearPositions() {
+  gTextPositions = [];
 }
