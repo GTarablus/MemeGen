@@ -11,13 +11,13 @@
   <body onload="init()">
     <div class="body-container">
       <header class="main-header">
-        <div class="logo">MemeGen</div>
+        <div class="logo"><a href="index.html">MemeGen</a></div>
         <nav class="main-nav">
           <div class="nav-pages">
             <ui>
-              <li>Gallery</li>
-              <li>Memes</li>
-              <li>About</li>
+              <li><a href="index.html">Gallery</a></li>
+              <li><a href="memes.html">Memes</a></li>
+              <li><a href="about.html">About</a></li>
             </ui>
           </div>
         </nav>
@@ -48,13 +48,24 @@
                     <span class="svg"></span>
                   </button>
                 </div>
+              </form>
+              <div class="editor-actions">
                 <button class="submit-text" onclick="cleanText()">
                   Submit
                 </button>
-              </form>
-              <button class="delete-line" onclick="onDelete()">Delete</button>
-              <button class="add-line" onclick="onAddLine()">Add</button>
+                <button
+                  class="remove-highlight"
+                  title="Remove Text Highlight"
+                  onclick="removeHighlight()"
+                >
+                  🚫
+                </button>
+
+                <button class="delete-line" onclick="onDelete()">Delete</button>
+                <button class="add-line" onclick="onAddLine()">Add</button>
+              </div>
             </div>
+            <label for=".position-control"> Position Lines:</label>
             <div class="position-control">
               <button class="move-text" onclick="onChangeTextPos(-5)">↑</button>
               <button class="default-position" onclick="onDefaultPos()">
@@ -122,14 +133,16 @@
           </div>
           <div class="actions">
             <button class="close-modal" onclick="closeModal()">❌</button>
-            <a href="#" onclick="downloadCanvas(this)" class="download-link"
+            <a href="#" onclick="onDownloadCanvas(this)" class="download-link"
               >Download</a
             >
           </div>
         </section>
         <div class="gallery-container"></div>
       </main>
-      <footer class="main-footer"></footer>
+      <footer class="main-footer">
+        <small>2021 · NemoBemo Productions ©</small>
+      </footer>
     </div>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>

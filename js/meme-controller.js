@@ -52,8 +52,6 @@ function drawText(lines, x, y) {
 function canvasClicked(ev) {
   const offsetX = ev.offsetX;
   const offsetY = ev.offsetY;
-  console.log('X: ' + offsetX);
-  console.log('Y: ' + offsetY);
   findText(offsetX, offsetY);
 }
 
@@ -69,9 +67,18 @@ function highlighText(textNum) {
   if (textNum === -1) return;
   var width = gTextPositions[textNum].width + 5;
   var x = gMeme.lines[textNum].positionX - width / 2;
-  var y = gMeme.lines[textNum].positionY - 40;
-  var height = gMeme.lines[textNum].size + 5;
+  if (gMeme.lines[textNum].size > 50)
+    var y = gMeme.lines[textNum].positionY - 50;
+  else var y = gMeme.lines[textNum].positionY - 40;
+  if (gMeme.lines[textNum].size > 50)
+    var height = gMeme.lines[textNum].size + 10;
+  else var height = gMeme.lines[textNum].size + 5;
   drawTextBox(x, y, height, width);
+}
+
+function removeHighlight() {
+  gMeme.lines[gTextFocus].textFocus = false;
+  drawImg();
 }
 
 /********* DOM functions *********/
@@ -165,14 +172,17 @@ function closeModal() {
   elGallery.style.display = 'grid';
 }
 
-function downloadCanvas(elLink) {
+function onDownloadCanvas(elLink) {
   gMeme.lines[gTextFocus].textFocus = false;
   drawImg();
+  downloadCanvas(elLink);
+  // setTimeout(downloadCanvas, 500, elLink);
+}
+function downloadCanvas(elLink) {
   const data = gCanvas.toDataURL();
   elLink.href = data;
   elLink.download = 'GeneratedMeme';
 }
-
 function onDelete() {
   deleteLine();
   cleanText();
