@@ -176,7 +176,6 @@ function onDownloadCanvas(elLink) {
   gMeme.lines[gTextFocus].textFocus = false;
   drawImg();
   downloadCanvas(elLink);
-  // setTimeout(downloadCanvas, 500, elLink);
 }
 function downloadCanvas(elLink) {
   const data = gCanvas.toDataURL();
