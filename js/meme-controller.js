@@ -8,7 +8,6 @@ function init() {
   gCtx = gCanvas.getContext('2d');
   renderImgs(gImgs);
   getImgs();
-  drawImg();
   // resizeCanvas();
 }
 /********* Canvas functions *********/
@@ -20,16 +19,36 @@ function clearCanvas() {
 
 function drawImg() {
   var img = new Image();
-  img.src = getImg(gMeme.selectedImgId).url;
+  var meme = getMeme();
+  img.src = getImg(meme.selectedImgId).url;
   clearPositions();
   img.onload = () => {
     gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
-    gMeme.lines.forEach(function (line) {
+    meme.lines.forEach(function (line) {
       drawText(line, line.positionX, line.positionY);
       if (line.textFocus) {
         highlighText(gTextFocus);
       }
     });
+    if (meme.isStickerPlaced) {
+      meme.stickers.forEach(function (sticker) {
+        if (sticker) drawSticker(sticker);
+      });
+    }
+  };
+}
+
+function drawSticker(sticker) {
+  var img = new Image();
+  img.src = sticker.url;
+  img.onload = () => {
+    gCtx.drawImage(
+      img,
+      sticker.positionX,
+      sticker.positionY,
+      sticker.size,
+      sticker.size
+    );
   };
 }
 
@@ -101,10 +120,38 @@ function renderImgs(imgs) {
 function getImgId(elImg) {
   var imageId = elImg.dataset.id;
   setMeme(imageId);
+  renderStickers();
   var modal = document.querySelector('#modal');
   modal.style.display = 'flex';
   var elGallery = document.querySelector('.gallery-container');
   elGallery.style.display = 'none';
+  drawImg();
+}
+
+function getStickerArray() {
+  var stickers = setStickers();
+  return stickers;
+}
+
+function renderStickers() {
+  var stickers = getStickerArray();
+  var strHTML = stickers
+    .map(function (sticker) {
+      return `<img
+    src="${sticker.url}"
+    data-id="${sticker.id}"
+    class="gallery-sticker"
+    onclick="getStickerId(this)"
+    />`;
+    })
+    .join('');
+  var elGallery = document.querySelector('.sticker-gallery');
+  elGallery.innerHTML = strHTML;
+}
+
+function getStickerId(elSticker) {
+  var stickerId = +elSticker.dataset.id;
+  var sticker = setSticker(stickerId);
   drawImg();
 }
 

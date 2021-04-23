@@ -111,7 +111,7 @@ small {
   display: none;
   align-items: center;
   min-width: 560px;
-  width: 1000px;
+  width: 1300px;
   height: 520px;
   background-color: rgb(195 191 255 / 85%);
   transition: 0.45s cubic-bezier(0.03, 0.98, 0.52, 0.99);
@@ -136,9 +136,24 @@ small {
   width: 600px;
   height: 500px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.text-decoration-control {
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 250px;
+}
+.text-lines-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 250px;
 }
 
 .editor-actions {
@@ -158,6 +173,21 @@ small {
   width: fit-content;
   color: green;
   text-decoration: underline;
+}
+
+.sticker-gallery {
+  width: 600px;
+  display: flex;
+  height: 130px;
+  border: 1px solid black;
+  background-color: inherit;
+  overflow: auto;
+}
+
+.gallery-sticker {
+  width: 100px;
+  height: 100px;
+  padding: 10px 5px;
 }
 
 .gallery-container {
@@ -214,7 +244,7 @@ small {
 .actions {
   display: flex;
   flex-direction: column-reverse;
-  width: 100%;
+  width: 100px;
   height: 100%;
   justify-content: space-between;
   align-items: flex-end;

@@ -1,13 +1,18 @@
 'use strict';
-var gImgCount = 20;
+var gImgCount = 21;
 var gKeywords = {};
 var gImgs = getImgs();
 var gTextFocus = 0;
 var gNumOfLines = 1;
 var gTextPositions = [];
+var gStickers = [];
+var gStickerFocus = -1;
+var gStickerCount = 38;
 var gMeme = {
   selectedImgId: 0,
   selectedLineIdx: 0,
+  isStickerPlaced: false,
+  stickers: [],
   lines: [
     {
       txt: 'line 1',
@@ -50,6 +55,10 @@ function addNewLine() {
   gNumOfLines++;
 }
 
+function getMeme() {
+  return gMeme;
+}
+
 function getImgs() {
   var imageArray = [];
   for (var i = 0; i < gImgCount; i++) {
@@ -59,6 +68,38 @@ function getImgs() {
     };
   }
   return imageArray;
+}
+
+function getStickers() {
+  var stickerArray = [];
+  for (var i = 0; i < gStickerCount; i++) {
+    stickerArray[i] = {
+      id: i,
+      url: `img/stickers/${i}.png`,
+    };
+  }
+  return stickerArray;
+}
+
+function setStickers(gStickers) {
+  gStickers = getStickers();
+  return gStickers;
+}
+
+function setSticker(id) {
+  gMeme.isStickerPlaced = true;
+  var sticker = {
+    id,
+    url: `img/stickers/${id}.png`,
+    positionX: 250,
+    positionY: 250,
+    size: 100,
+  };
+  gMeme.stickers.push(sticker);
+  gStickerFocus++;
+}
+function getSticker(id) {
+  return gStickers[id];
 }
 
 function getImg(id) {
