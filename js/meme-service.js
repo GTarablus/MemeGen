@@ -1,5 +1,5 @@
 'use strict';
-var gImgCount = 21;
+var gImgCount = 20;
 var gKeywords = {};
 var gImgs = getImgs();
 var gTextFocus = 0;

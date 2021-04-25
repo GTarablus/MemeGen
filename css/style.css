@@ -119,7 +119,7 @@ small {
 #modal {
   margin: 0 auto;
   padding: 10px;
-  display: flex;
+  display: none;
   align-items: center;
   min-width: 560px;
   width: 1300px;
